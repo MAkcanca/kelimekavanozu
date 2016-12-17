@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_margin_half"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_margin_half">
+
+        <TextView
+            android:id="@+id/note_item_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Kelime" />
+
+        <TextView
+            android:id="@+id/note_item_desc"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin_half"
+            android:alpha="0.54"
+            android:ellipsize="end"
+            android:maxLines="6"
+            android:paddingBottom="@dimen/activity_margin_half"
+            android:textColor="@android:color/black"
+            tools:text="Açıklama" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/note_item_time"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.34"
+            android:ellipsize="end"
+            android:textSize="8dp"
+            android:maxLines="1"
+            android:paddingBottom="@dimen/activity_margin_half"
+            android:textColor="@android:color/black"
+            tools:text="Tarih"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/shareButton"
+            android:layout_toLeftOf="@+id/shareButton" />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:background="@android:drawable/ic_menu_share"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/note_item_time" />
+    </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

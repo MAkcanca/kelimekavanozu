@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="galilei.kelimekavanozu" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name=".activity.InitialActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".activity.ThemeChooserActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".activity.PoemBuilderActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.ThemeChooserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.ThemeChooserActivity" />
+        </activity>
+        <activity
+            android:name=".activity.PoemHistoryActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.ThemeChooserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.ThemeChooserActivity" />
+        </activity>
+        <activity
+            android:name=".activity.PoemPopularActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.ThemeChooserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.ThemeChooserActivity" />
+        </activity>
+
+        <provider
+            android:name=".db.PoemProvider"
+            android:authorities="galilei.kelimekavanozu.provider"
+            android:exported="false" >
+        </provider>
+
+        <service
+            android:name=".AppService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name="com.mopub.mobileads.MoPubActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.mobileads.MraidActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.common.MoPubBrowser"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".activity.ThemeChooserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutTheme">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.ThemeChooserActivity" />
+        </activity>
+        <activity android:name="galilei.kelimekavanozu.kelimeler.AddNoteActivity"
+            android:theme="@style/AppTheme"/>
+        <meta-data
+            android:name="DATABASE"
+            android:value="kavanoz.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="galilei.kelimekavanozu" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="beae18c7f796aa22496b5bd03da387e44473a627"
+            />
+
+    </application>
+
+</manifest>
