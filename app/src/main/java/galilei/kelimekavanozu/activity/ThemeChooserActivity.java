@@ -146,7 +146,8 @@ public class ThemeChooserActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//                Crashlytics.log("Yeni Kelime: butona basıldı");
+//                Answers.getInstance().logCustom(new CustomEvent("Ekle butonuna basıldı"));
                 Intent i = new Intent(ThemeChooserActivity.this, AddNoteActivity.class);
                 startActivity(i);
 
@@ -225,7 +226,7 @@ public class ThemeChooserActivity extends AppCompatActivity {
                         kavanoz.startAnimation(shake);
                         shakemode = true;
                         notclick = false;
-                        Snackbar.make(fab, "Rastgele kelimelerden birini görmek için telefonunuzu sallayın.", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(fab, "Rastgele kelimelerden birini görmek için telefonunuzu sallayın.", Snackbar.LENGTH_LONG).show();
                         kavanoz.setColorFilter(Color.argb(100, 255, 140, 0));
                     } else {
                         shakemode = false;
@@ -253,6 +254,8 @@ public class ThemeChooserActivity extends AppCompatActivity {
 				 */
                         // View element to be shaken
                         // Perform animation
+                        Crashlytics.log("Shake event : triggered");
+                        Answers.getInstance().logCustom(new CustomEvent("Shake event : tetiklendi"));
                         kavanoz.startAnimation(shake);
                         new rastgeletweet().execute();
                     }

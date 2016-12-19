@@ -24,9 +24,14 @@ import android.view.Window;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
+import com.mopub.nativeads.MoPubAdAdapter;
+import com.mopub.nativeads.MoPubNativeAdPositioning;
+import com.mopub.nativeads.MoPubNativeAdRenderer;
+import com.mopub.nativeads.ViewBinder;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
+import galilei.kelimekavanozu.BuildConfig;
 import galilei.kelimekavanozu.R;
 
 /**
@@ -36,6 +41,8 @@ public class PoemPopularActivity extends ListActivity {
 
     private static final String TAG = "PoemPopularActivity";
     private static final String SEARCH_QUERY = "#kelimekavanozu";
+    private MoPubAdAdapter moPubAdAdapter;
+    private static final String MY_AD_UNIT_ID = BuildConfig.MOPUB_AD_UNIT_ID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +62,21 @@ public class PoemPopularActivity extends ListActivity {
         SearchTimeline searchTimeline = new SearchTimeline.Builder().query(SEARCH_QUERY).build();
 
         final TweetTimelineListAdapter timelineAdapter = new TweetTimelineListAdapter(this, searchTimeline);
-        setListAdapter(timelineAdapter);
+        //setListAdapter(timelineAdapter);
         getListView().setEmptyView(findViewById(R.id.loading));
+
+        final ViewBinder mopubViewBinder = new ViewBinder.Builder(R.layout.native_ad_layout)
+                .mainImageId(R.id.native_ad_main_image)
+                .iconImageId(R.id.native_ad_icon_image)
+                .titleId(R.id.native_ad_title)
+                .textId(R.id.native_ad_text)
+                .build();
+        MoPubNativeAdPositioning.MoPubServerPositioning adPositioning =
+                MoPubNativeAdPositioning.serverPositioning();
+        final MoPubNativeAdRenderer adRenderer = new MoPubNativeAdRenderer(mopubViewBinder);
+        moPubAdAdapter = new MoPubAdAdapter(this, timelineAdapter, adPositioning);
+        moPubAdAdapter.registerAdRenderer(adRenderer);
+        setListAdapter(moPubAdAdapter);
     }
 
     private void setUpBack() {
@@ -70,4 +90,9 @@ public class PoemPopularActivity extends ListActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        moPubAdAdapter.loadAds(MY_AD_UNIT_ID);
+    }
 }

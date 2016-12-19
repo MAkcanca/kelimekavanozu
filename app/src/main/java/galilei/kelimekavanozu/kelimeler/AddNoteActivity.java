@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.orm.SugarContext;
 
 import java.util.List;
@@ -81,7 +84,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 String newTitle = etTitle.getText().toString();
                 String newDesc = etDesc.getText().toString();
                 long newTime = System.currentTimeMillis();
-
+                Crashlytics.log("Yeni Kelime: kelime eklendi");
+                Answers.getInstance().logCustom(new CustomEvent("Yeni kelime eklendi"));
 
                 /**
                  * TODO: Check if note exists before saving

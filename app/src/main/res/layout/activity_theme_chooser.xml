@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/top_bar_left_side_button_margin_start"
             android:layout_marginStart="@dimen/top_bar_left_side_button_margin_start"
             android:contentDescription="@string/content_desc_history"
-            android:src="@drawable/ic_history"
+            android:src="@mipmap/ic_settings"
             android:tint="@color/green" />
 
         <ImageView
@@ -45,7 +45,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:contentDescription="@string/content_desc_icon"
-            android:src="@drawable/jar"
+            android:src="@drawable/kavanoz"
             android:scaleType="fitCenter"
             android:layout_margin="10dp"
             android:adjustViewBounds="true"

@@ -6,13 +6,14 @@ package galilei.kelimekavanozu.kelimeler;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,12 +50,15 @@ public class KelimelerAdapter extends RecyclerView.Adapter<KelimelerAdapter.Note
         holder.sharebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = notes.get(position).getNote().trim() + " #KelimeKavanozu";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "#KelimeKavanozu");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                context.startActivity(Intent.createChooser(sharingIntent, "Paylaş"));
+//                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+//                sharingIntent.setType("text/plain");
+                String shareBody = notes.get(position).getTitle().trim() + " " + notes.get(position).getNote().trim() + " #KelimeKavanozu";
+//                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "#KelimeKavanozu");
+//                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+//                context.startActivity(Intent.createChooser(sharingIntent, "Paylaş"));
+                TweetComposer.Builder builder = new TweetComposer.Builder(context)
+                        .text(shareBody);
+                builder.show();
 
             }
         });
