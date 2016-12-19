@@ -127,7 +127,7 @@
             android:value="galilei.kelimekavanozu" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="beae18c7f796aa22496b5bd03da387e44473a627"
+            android:value="EDIT_THIS"
             />
 
         <activity
