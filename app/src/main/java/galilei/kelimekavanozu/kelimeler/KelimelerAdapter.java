@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +51,7 @@ public class KelimelerAdapter extends RecyclerView.Adapter<KelimelerAdapter.Note
             public void onClick(View v) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-               String shareBody = notes.get(position).getNote().trim();
+                String shareBody = notes.get(position).getNote().trim() + " #KelimeKavanozu";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "#KelimeKavanozu");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 context.startActivity(Intent.createChooser(sharingIntent, "Paylaş"));

@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/about_scroll_view_margin"
-        android:layout_above="@+id/activate_crashes"
+        android:layout_above="@+id/deactivate_accounts"
         android:layout_below="@+id/cannonball_logo">
 
         <RelativeLayout
@@ -35,7 +35,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_margin="@dimen/about_instruction_text_margin"
-                android:gravity="center"
                 android:lineSpacingMultiplier="1"
                 android:text="@string/instructions"
                 android:textColor="@color/green"
@@ -47,7 +46,7 @@
                 android:layout_height="@dimen/about_fabric_logo_height"
                 android:layout_below="@+id/instructions"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_fabric" />
+                android:src="@drawable/world" />
 
             <galilei.kelimekavanozu.view.AvenirTextView
                 android:id="@+id/learn_more"
@@ -62,19 +61,6 @@
 
         </RelativeLayout>
     </ScrollView>
-
-    <CheckBox
-        android:id="@+id/activate_crashes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/deactivate_accounts"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="@dimen/about_crash_checkbox_margin_end"
-        android:layout_marginEnd="@dimen/about_crash_checkbox_margin_end"
-        android:layout_marginLeft="@dimen/about_crash_checkbox_margin_start"
-        android:layout_marginStart="@dimen/about_crash_checkbox_margin_start"
-        android:text="@string/about_activate_crashes"
-        android:textColor="@color/green" />
 
     <galilei.kelimekavanozu.view.AvenirTextView
         android:id="@+id/deactivate_accounts"

@@ -17,7 +17,6 @@
 package galilei.kelimekavanozu.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -42,21 +41,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.orm.SugarContext;
 import com.squareup.picasso.Picasso;
-import com.twitter.sdk.android.core.internal.TwitterCollection;
-import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,17 +59,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
-import galilei.kelimekavanozu.App;
 import galilei.kelimekavanozu.R;
 import galilei.kelimekavanozu.ShakeDetector;
 import galilei.kelimekavanozu.kelimeler.AddNoteActivity;
 import galilei.kelimekavanozu.kelimeler.KelimelerAdapter;
-import galilei.kelimekavanozu.kelimeler.MainActivity;
 import galilei.kelimekavanozu.kelimeler.Note;
-import galilei.kelimekavanozu.model.Theme;
-import galilei.kelimekavanozu.view.ThemeAdapter;
 
 public class ThemeChooserActivity extends AppCompatActivity {
     public static final String IS_NEW_POEM = "ThemeChooser.IS_NEW_POEM";
@@ -90,7 +77,7 @@ public class ThemeChooserActivity extends AppCompatActivity {
     String inputLine;
     ImageView arkaplan500,kavanoz;
     ImageButton Share;
-    String output;
+    String output, output2;
     boolean hasAccelerometer = false;
     boolean shakemode = false;
     private SensorManager mSensorManager;
@@ -118,58 +105,30 @@ public class ThemeChooserActivity extends AppCompatActivity {
         SugarContext.init(this);
         arkaplan500 = (ImageView) findViewById(R.id.arkaplan500);
         kavanoz = (ImageView) findViewById(R.id.cannonball_logo);
+        recyclerView = (RecyclerView) findViewById(R.id.main_list);
 
         final Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
 
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        Share = (ImageButton) findViewById(R.id.shareButton);
 
-        if (hasAccelerometer) {
-            kavanoz.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // View element to be shaken
-                    // Perform animation
-                    if (notclick) {
-                        kavanoz.startAnimation(shake);
-                        shakemode = true;
-                        notclick = false;
-                        Snackbar.make(recyclerView, "Başkalarının kelimelerini görmek için telefonunuzu sallayın.", Snackbar.LENGTH_SHORT).show();
-                        kavanoz.setColorFilter(Color.argb(100, 255,140,0));
-                    }
-                    else {
-                        shakemode = false;
-                        notclick = true;
-                        kavanoz.setColorFilter(getResources().getColor(R.color.green));
+        StaggeredGridLayoutManager gridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
 
-                    }
-                }
-            });
-                // ShakeDetector initialization
-                mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-                mAccelerometer = mSensorManager
-                        .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-                mShakeDetector = new ShakeDetector();
 
-                mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+        recyclerView.setLayoutManager(gridLayoutManager);
+        initialCount = Note.count(Note.class);
+        if (savedInstanceState != null)
+            modifyPos = savedInstanceState.getInt("modify");
 
-                    @Override
-                    public void onShake(int count) {
-                        if (shakemode) {
-				/*
-				 * The following method, "handleShakeEvent(count):" is a stub //
-				 * method you would use to setup whatever you want done once the
-				 * device has been shook.
-				 */
-                        // View element to be shaken
-                        // Perform animation
-                        kavanoz.startAnimation(shake);
-                            rastgeletweet();
-                         }
-                    }
-                });
+        if (initialCount >= 0) {
+
+            notes = Note.listAll(Note.class);
+
+            adapter = new KelimelerAdapter(ThemeChooserActivity.this, notes);
+            recyclerView.setAdapter(adapter);
+
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -200,20 +159,6 @@ public class ThemeChooserActivity extends AppCompatActivity {
 
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.main_list);
-        StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        gridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
-
-
-
-
-
-        recyclerView.setLayoutManager(gridLayoutManager);
-        initialCount = Note.count(Note.class);
-        if (savedInstanceState != null)
-            modifyPos = savedInstanceState.getInt("modify");
-
         setUpViews();
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -234,7 +179,7 @@ public class ThemeChooserActivity extends AppCompatActivity {
                 note.delete();
                 initialCount -= 1;
 
-                Snackbar.make(recyclerView, "Kelime silindi", Snackbar.LENGTH_SHORT)
+                Snackbar.make(fab, "Kelime silindi", Snackbar.LENGTH_SHORT)
                         .setAction("GERİ AL", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -253,13 +198,73 @@ public class ThemeChooserActivity extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        adapter.SetOnItemClickListener(new KelimelerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Log.d("Main", "click");
+
+                Intent i = new Intent(ThemeChooserActivity.this, AddNoteActivity.class);
+                i.putExtra("isEditing", true);
+                i.putExtra("note_title", notes.get(position).title);
+                i.putExtra("note", notes.get(position).note);
+                i.putExtra("note_time", notes.get(position).time);
+
+                modifyPos = position;
+
+                startActivity(i);
+            }
+        });
+        if (hasAccelerometer) {
+            kavanoz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // View element to be shaken
+                    // Perform animation
+                    if (notclick) {
+                        kavanoz.startAnimation(shake);
+                        shakemode = true;
+                        notclick = false;
+                        Snackbar.make(fab, "Rastgele kelimelerden birini görmek için telefonunuzu sallayın.", Snackbar.LENGTH_SHORT).show();
+                        kavanoz.setColorFilter(Color.argb(100, 255, 140, 0));
+                    } else {
+                        shakemode = false;
+                        notclick = true;
+                        kavanoz.setColorFilter(getResources().getColor(R.color.green));
+
+                    }
+                }
+            });
+            // ShakeDetector initialization
+            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            mAccelerometer = mSensorManager
+                    .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            mShakeDetector = new ShakeDetector();
+
+            mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+                @Override
+                public void onShake(int count) {
+                    if (shakemode) {
+                /*
+                 * The following method, "handleShakeEvent(count):" is a stub //
+				 * method you would use to setup whatever you want done once the
+				 * device has been shook.
+				 */
+                        // View element to be shaken
+                        // Perform animation
+                        kavanoz.startAnimation(shake);
+                        new rastgeletweet().execute();
+                    }
+                }
+            });
+        }
     }
 
     private void setUpViews() {
         setUpHistory();
         setUpPopular();
         setUpIcon();
-        setUpThemes();
     }
 
     private void setUpIcon() {
@@ -301,35 +306,15 @@ public class ThemeChooserActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(ThemeChooserActivity.this, Settings.class);
+                startActivity(intent);
+            }
+        });
     }
-    private void setUpThemes() {
-        if (initialCount >= 0) {
 
-            notes = Note.listAll(Note.class);
-
-            adapter = new KelimelerAdapter(ThemeChooserActivity.this, notes);
-            recyclerView.setAdapter(adapter);
-
-            adapter.SetOnItemClickListener(new KelimelerAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-
-                    Log.d("Main", "click");
-
-                    Intent i = new Intent(ThemeChooserActivity.this, AddNoteActivity.class);
-                    i.putExtra("isEditing", true);
-                    i.putExtra("note_title", notes.get(position).title);
-                    i.putExtra("note", notes.get(position).note);
-                    i.putExtra("note_time", notes.get(position).time);
-
-                    modifyPos = position;
-
-                    startActivity(i);
-                }
-            });
-
-        }
-    }
 //    private void setUpThemes() {
 //        final ListView view = (ListView) findViewById(R.id.theme_list);
 //        view.setAdapter(new ThemeAdapter(this, Theme.values()));
@@ -444,7 +429,7 @@ protected void onSaveInstanceState(Bundle outState) {
 
         @Override
         protected void onPostExecute(String result) {
-            if (result != null || !result.equals("")) {
+            if (result != null && !result.equals("") && !result.trim().equals("")) {
                 Picasso
                         .with(ThemeChooserActivity.this)
                         .load(result)
@@ -460,7 +445,67 @@ protected void onSaveInstanceState(Bundle outState) {
 
     }
 
-    public void rastgeletweet(){
+    private class rastgeletweet extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            URL yahoo = null;
+            try {
+                yahoo = new URL("http://demirreklamist.com/nano/tweet.php");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            BufferedReader in = null;
+            try {
+                in = new BufferedReader(
+                        new InputStreamReader(
+                                yahoo.openStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            try {
+                while ((inputLine = in.readLine()) != null) {
+                    output2 = inputLine;
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return output2;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null && !result.equals("") && !result.trim().equals("")) {
+                long newTime = System.currentTimeMillis();
+                Note note2 = new Note("#KelimeKavanozu", result, newTime);
+                note2.save();
+
+                final long newCount2 = Note.count(Note.class);
+
+
+                // A note is added
+                Log.d("Main", "Adding new note");
+
+                // Just load the last added note (new)
+                Note note = Note.last(Note.class);
+
+                notes.add(note);
+                adapter.notifyItemInserted((int) newCount2);
+
+                initialCount = newCount2;
+            } else {
+// Tweet gelmedi
+            }
+        }
 
     }
 

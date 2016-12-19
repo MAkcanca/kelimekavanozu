@@ -53,6 +53,7 @@ public class App extends Application {
     public final static String CRASHLYTICS_KEY_CRASHES = "are_crashes_enabled";
     public final static String POEM_PIC_DIR = "cannonball";
 
+    public int notificationCount;
     private static App singleton;
     private TwitterAuthConfig authConfig;
     private Typeface avenirFont;
@@ -92,6 +93,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        notificationCount = 0;
         singleton = this;
         extractAvenir();
         authConfig
@@ -124,5 +126,13 @@ public class App extends Application {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("are_crashes_enabled", status);
         editor.apply();
+    }
+
+    public void incrementCount() {
+        notificationCount++;
+    }
+
+    public int getNotificationCount() {
+        return notificationCount;
     }
 }

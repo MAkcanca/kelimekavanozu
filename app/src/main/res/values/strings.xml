@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string name="radial_time_picker_result_value">%1$d:%2$d</string>
+    <string name="button_title">Get Bananas</string>
+    <string name="notification_title">Kelime Kavanozu</string>
+    <string name="notification_subject">Bugün </string>
+    <string name="ticker_count_label">Number of notifications\:</string>
+
+
     <string name="app_name">Kelime Kavanozu</string>
     <string name="shuffle">Shuffle</string>
     <string name="content_desc_back">Back button</string>
@@ -11,12 +19,12 @@
     <string name="content_desc_history">History</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_out">Hesabından Çıkış Yap</string>
     <string name="sign_in_with_twitter">Sign in with Twitter</string>
     <string name="sign_in_with_phone">Sign in with Phone</string>
     <string name="share_poem_tweet_text">Look at the poem I wrote using #cannonballapp</string>
     <string name="seconds_to_go">60</string>
-    <string name="about_learn_more">Learn more at t.co/cannonball</string>
+    <string name="about_learn_more">Kaynak kod\n https://github.com/MAkcanca/kelimekavanozu</string>
     <string name="about_activate_crashes">Activate crashes (for demo purposes)</string>
 
     <string name="toast_poem_created">Poem written successfully!</string>
@@ -46,11 +54,12 @@
     <string name="title_activity_about">About</string>
 
     <string name="instructions">
-        Cannonball is the fun way to create and share stories and poems on your phone.
-        Start with a beautiful image from the gallery, then choose words about #adventure,
-        #romance, #nature or #mystery to complete the story and share it with friends.
-        Browse top stories created by other users for inspiration.\n\n
-        Cannonball was built with Fabric.
+        Kelime Kavanozu\, küçücük dahi olsa kelimelerin dünyayı değiştirebileceğini göstermek için yapılmış bir çalışmadır. \n\n
+        Kelimelerini yükselt\, sesini değil.\n Yağmurdur çiçekleri büyüten\, gök gürültüsü değil. \n -MEVLANA\n \n
+        Fikir : Barış Özcan\, Onur Süme \n
+        Teşekkürler Twitter\, Fabric ve Cannonball. \n
+        Türkiye \'de sevgiyle geliştirildi. \n
+        Kelime Kavanozu açık kaynaklı bir projedir.
     </string>
 
     <string-array name="themes">

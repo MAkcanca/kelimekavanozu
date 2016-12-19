@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/corlat"
+    tools:context="galilei.kelimekavanozu.activity.ThemeChooserActivity">
+
+    <FrameLayout
+        android:id="@+id/wololo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     tools:context="galilei.kelimekavanozu.activity.ThemeChooserActivity">
 
-    <RelativeLayout
+
+            <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height">
 
@@ -61,20 +74,16 @@
             android:adjustViewBounds="true"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="galilei.kelimekavanozu.kelimeler.MainActivity">
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/main_list"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       tools:listitem="@layout/note_item"
-       app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/note_item"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </RelativeLayout>
+        </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -82,7 +91,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_24dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white"
+        app:layout_anchor="@id/wololo" />
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
-    </RelativeLayout>
-</LinearLayout>

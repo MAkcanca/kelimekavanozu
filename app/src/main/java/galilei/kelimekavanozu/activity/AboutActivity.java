@@ -18,18 +18,14 @@ package galilei.kelimekavanozu.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LoginEvent;
 import com.digits.sdk.android.Digits;
 import com.twitter.sdk.android.Twitter;
 
-import galilei.kelimekavanozu.App;
 import galilei.kelimekavanozu.R;
 import galilei.kelimekavanozu.SessionRecorder;
 
@@ -40,10 +36,10 @@ public class AboutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         setUpViews();
+
     }
 
     private void setUpViews() {
-        setUpCrashSwitcher();
         setUpSignOut();
     }
 
@@ -60,20 +56,6 @@ public class AboutActivity extends Activity {
 
                 Toast.makeText(getApplicationContext(), "All accounts are cleared",
                         Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setUpCrashSwitcher() {
-        final CheckBox cb = (CheckBox) findViewById(R.id.activate_crashes);
-        cb.setChecked(App.getInstance().areCrashesEnabled());
-        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                App.getInstance().setCrashesStatus(isChecked);
-                Toast.makeText(getApplicationContext(), "Crashes are " +
-                        (isChecked ? "ON" : "OFF"), Toast.LENGTH_SHORT).show();
-                Crashlytics.setBool(App.CRASHLYTICS_KEY_CRASHES, isChecked);
             }
         });
     }

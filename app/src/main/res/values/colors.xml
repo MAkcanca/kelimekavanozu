@@ -10,4 +10,5 @@
     <color name="full_transparent">#00000000</color>
     <color name="not_so_transparent">#44000000</color>
     <color name="even_less_transparent">#66000000</color>
+    <color name="space">#172e49</color>
 </resources>
