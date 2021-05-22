@@ -1,5 +1,4 @@
-# Kelime Kavanozu
-![Kelime Kavanozu](https://github.com/MAkcanca/kelimekavanozu/raw/master/images/icon.png?raw=true)
+# <img src="https://github.com/MAkcanca/kelimekavanozu/raw/master/images/icon.png?raw=true" width="52" height="52"> Kelime Kavanozu
 
 ![Cover](https://github.com/MAkcanca/kelimekavanozu/raw/master/images/cover.jpg?raw=true)
 
